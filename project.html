@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects </title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: transparent;
+            color: #333;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        /* ==================== 3D ANIMATION BACKGROUND ==================== */
+        .canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        
+        /* ==================== NAVBAR ==================== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+            position: relative;
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #667eea;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: #667eea;
+            transition: 0.3s;
+        }
+        
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        
+        .menu-btn {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+        }
+        
+        /* ==================== PROJECTS PAGE ==================== */
+        .projects-page {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            padding: 100px 60px 60px;
+        }
+        
+        .projects-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 38px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .section-title span {
+            color: #667eea;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 16px;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+        
+        .project-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: 0.3s;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border: 1px solid rgba(102,126,234,0.1);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(102,126,234,0.15);
+            border-color: #667eea;
+            background: white;
+        }
+        
+        .project-img {
+            width: 100%;
+            height: 160px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .project-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+        
+        .project-card:hover .project-img img {
+            transform: scale(1.08);
+        }
+        
+        .project-info {
+            padding: 15px;
+        }
+        
+        .project-info h3 {
+            font-size: 16px;
+            margin-bottom: 6px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .project-info p {
+            color: #666;
+            margin-bottom: 10px;
+            line-height: 1.4;
+            font-size: 12px;
+        }
+        
+        .project-tech {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+        
+        .project-tech span {
+            background: rgba(102,126,234,0.1);
+            padding: 3px 8px;
+            border-radius: 15px;
+            font-size: 10px;
+            color: #667eea;
+        }
+        
+        .project-links {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .project-links a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 12px;
+            transition: 0.3s;
+        }
+        
+        .project-links a:hover {
+            color: #764ba2;
+        }
+        
+        /* Footer */
+        .footer {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            width: 100%;
+            margin: 0;
+            margin-top: 40px;
+        }
+        
+        .footer p {
+            margin: 0;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+        
+        .footer .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 10px;
+        }
+        
+        .footer .social-links a {
+            width: 35px;
+            height: 35px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 16px;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+        
+        .footer .social-links a:hover {
+            background: #fff;
+            color: #667eea;
+            transform: translateY(-3px);
+        }
+        
+        @media (max-width: 1024px) {
+            .navbar {
+                padding: 15px 30px;
+            }
+            .projects-page {
+                padding: 90px 30px 50px;
+            }
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .menu-btn {
+                display: block;
+            }
+            .section-title {
+                font-size: 32px;
+            }
+            .projects-page {
+                padding: 80px 20px 40px;
+            }
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- 3D ANIMATION BACKGROUND -->
+    <div class="canvas-container">
+        <canvas id="bgCanvas"></canvas>
+    </div>
+    
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">Komal</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="project.html" class="active">Projects</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="menu-btn">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+    
+    <!-- Projects Page Content -->
+    <section class="projects-page">
+        <div class="projects-container">
+            <h2 class="section-title">My <span>Projects</span></h2>
+            <p class="section-subtitle">MERN Stack | Full Stack Development</p>
+            
+            <div class="projects-grid">
+                
+                <!-- Project 1 - Portfolio Website -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="https://images.unsplash.com/photo-1545235617-7a424c1a60cc?w=400&h=200&fit=crop" alt="Portfolio">
+                    </div>
+                    <div class="project-info">
+                        <h3>Portfolio Website</h3>
+                        <p>Personal portfolio with 3D animations, responsive design, and contact form.</p>
+                       
+                       
+                    </div>
+                </div>
+                
+                <!-- Project 2 - Restaurant Website -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=200&fit=crop" alt="Restaurant">
+                    </div>
+                    <div class="project-info">
+                        <h3>Restaurant Website</h3>
+                        <p>Online food ordering, menu management, table booking, and reviews.</p>
+                       
+                       
+                    </div>
+                </div>
+                
+                <!-- Project 3 - Chat Application -->
+                <div class="project-card">
+                    <div class="project-img">
+                         <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=500&h=300&fit=crop" alt="Chat App">
+                    </div>
+                    <div class="project-info">
+                        <h3>Real-Time Chat App</h3>
+                        <p>One-on-one and group chat, file sharing, typing indicators, online status.</p>
+                       
+                       
+                    </div>
+                </div>
+                
+                <!-- Project 4 - E-Commerce Website -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="https://images.unsplash.com/photo-1557821552-17105176677c?w=400&h=200&fit=crop" alt="E-Commerce">
+                    </div>
+                    <div class="project-info">
+                        <h3>E-Commerce Website</h3>
+                        <p>Shopping cart, product filtering, user authentication, payment gateway.</p>
+                      
+                       
+                    </div>
+                </div>
+                
+                <!-- Project 5 - Weather App -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="https://images.unsplash.com/photo-1592210454359-9043f067919b?w=400&h=200&fit=crop" alt="Weather App">
+                    </div>
+                    <div class="project-info">
+                        <h3>Weather App</h3>
+                        <p>Real-time weather updates, 5-day forecast, search by city name.</p>
+                       
+                       
+                    </div>
+                </div>
+                
+                <!-- Project 6 - Task Manager -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=200&fit=crop" alt="Task Manager">
+                    </div>
+                    <div class="project-info">
+                        <h3>Task Manager App</h3>
+                        <p>Create, edit, delete tasks with drag-drop and priority levels.</p>
+                       
+                      
+                    </div>
+                </div>
+                
+                <!-- Project 7 - Blog Platform -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="https://images.unsplash.com/photo-1522542550221-31fd19575a2d?w=400&h=200&fit=crop" alt="Blog Platform">
+                    </div>
+                    <div class="project-info">
+                        <h3>Blog Platform</h3>
+                        <p>Create, edit, delete posts with markdown editor and comments.</p>
+                        
+                        
+                    </div>
+                </div>
+                
+                <!-- Project 8 - Hotel Booking -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&h=200&fit=crop" alt="Hotel Booking">
+                    </div>
+                    <div class="project-info">
+                        <h3>Hotel Booking System</h3>
+                        <p>Room search, booking, payment gateway, and admin dashboard.</p>
+                      
+                        
+                    </div>
+                </div>
+                
+                <!-- Project 9 - Social Media Dashboard -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400&h=200&fit=crop" alt="Social Media">
+                    </div>
+                    <div class="project-info">
+                        <h3>Social Media Dashboard</h3>
+                        <p>Posts, likes, comments, user profiles, and real-time notifications.</p>
+                     
+                       
+                    </div>
+                </div>
+                
+                <!-- Project 10 - Food Delivery -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="https://images.unsplash.com/photo-1556742031-c6961e8560b0?w=400&h=200&fit=crop" alt="Food Delivery">
+                    </div>
+                    <div class="project-info">
+                        <h3>Food Delivery App</h3>
+                        <p>Restaurant listing, cart, order tracking, and real-time status.</p>
+                        
+                       
+                    </div>
+                </div>
+                
+                <!-- Project 11 - Expense Tracker -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=400&h=200&fit=crop" alt="Expense Tracker">
+                    </div>
+                    <div class="project-info">
+                        <h3>Expense Tracker</h3>
+                        <p>Track income/expenses, charts, budget management, and reports.</p>
+                        
+                        
+                    </div>
+                </div>
+                
+                <!-- Project 12 - Job Portal -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=400&h=200&fit=crop" alt="Job Portal">
+                    </div>
+                    <div class="project-info">
+                        <h3>Job Portal</h3>
+                        <p>Job posting, application tracking, resume upload, employer dashboard.</p>
+                       
+                       
+                    </div>
+                </div>
+                
+                <!-- Project 13 - Learning Management System -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&h=200&fit=crop" alt="LMS">
+                    </div>
+                    <div class="project-info">
+                        <h3>Learning Management System</h3>
+                        <p>Online courses, video lectures, quizzes, and certificates.</p>
+                       
+                        
+                    </div>
+                </div>
+                
+                <!-- Project 14 - Movie App -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&h=200&fit=crop" alt="Movie App">
+                    </div>
+                    <div class="project-info">
+                        <h3>Movie App</h3>
+                        <p>Search movies, view details, ratings, and add to favorites.</p>
+            
+                    </div>
+                </div>
+                
+                <!-- Project 15 - Fitness Tracker -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=200&fit=crop" alt="Fitness Tracker">
+                    </div>
+                    <div class="project-info">
+                        <h3>Fitness Tracker</h3>
+                        <p>Workout plans, calorie tracking, progress charts, and goals.</p>
+                    
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Komal | Software Engineer | Web Developer & App Developer</p>
+        <div class="social-links">
+            <a href="https://github.com/" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/komal-rajput410" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+        </div>
+    </footer>
+    
+    <!-- Three.js for 3D ANIMATION -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.128.0/build/three.module.js"
+            }
+        }
+    </script>
+    
+    <script type="module">
+        import * as THREE from 'three';
+        
+        const canvas = document.getElementById('bgCanvas');
+        const scene = new THREE.Scene();
+        scene.background = null;
+        
+        const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+        camera.position.set(0, 2, 12);
+        
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+        
+        function setSize() {
+            const container = document.querySelector('.canvas-container');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            renderer.setSize(width, height);
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+        }
+        
+        setSize();
+        window.addEventListener('resize', setSize);
+        
+        // Floating Shapes Animation
+        const shapes = [];
+        
+        // Torus Knot
+        const knotGeometry = new THREE.TorusKnotGeometry(0.8, 0.15, 100, 16);
+        const knotMaterial = new THREE.MeshStandardMaterial({
+            color: 0x667eea,
+            roughness: 0.3,
+            metalness: 0.5,
+            transparent: true,
+            opacity: 0.6
+        });
+        const knot = new THREE.Mesh(knotGeometry, knotMaterial);
+        knot.position.set(0, 0, -3);
+        scene.add(knot);
+        
+        // Floating Spheres
+        const sphereGeometry = new THREE.SphereGeometry(0.2, 32, 32);
+        const spheres = [];
+        for (let i = 0; i < 60; i++) {
+            const material = new THREE.MeshStandardMaterial({
+                color: 0x764ba2,
+                roughness: 0.2,
+                metalness: 0.3,
+                transparent: true,
+                opacity: 0.5
+            });
+            const sphere = new THREE.Mesh(sphereGeometry, material);
+            sphere.userData = {
+                x: (Math.random() - 0.5) * 12,
+                y: (Math.random() - 0.5) * 8,
+                z: (Math.random() - 0.5) * 12 - 4,
+                speedX: (Math.random() - 0.5) * 0.005,
+                speedY: (Math.random() - 0.5) * 0.005
+            };
+            sphere.position.set(sphere.userData.x, sphere.userData.y, sphere.userData.z);
+            scene.add(sphere);
+            spheres.push(sphere);
+        }
+        
+        // Particles
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 1500;
+        const posArray = new Float32Array(particlesCount * 3);
+        
+        for (let i = 0; i < particlesCount * 3; i += 3) {
+            posArray[i] = (Math.random() - 0.5) * 30;
+            posArray[i+1] = (Math.random() - 0.5) * 20;
+            posArray[i+2] = (Math.random() - 0.5) * 20 - 10;
+        }
+        
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        const particlesMaterial = new THREE.PointsMaterial({
+            color: 0x667eea,
+            size: 0.04,
+            transparent: true,
+            opacity: 0.4
+        });
+        const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particles);
+        
+        // Lights
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(2, 5, 3);
+        scene.add(directionalLight);
+        
+        let time = 0;
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            time += 0.01;
+            
+            knot.rotation.x += 0.01;
+            knot.rotation.y += 0.015;
+            knot.rotation.z += 0.008;
+            
+            spheres.forEach(sphere => {
+                sphere.position.x += sphere.userData.speedX;
+                sphere.position.y += sphere.userData.speedY;
+                
+                if (Math.abs(sphere.position.x) > 6) sphere.userData.speedX *= -1;
+                if (Math.abs(sphere.position.y) > 4) sphere.userData.speedY *= -1;
+                
+                sphere.rotation.x += 0.02;
+                sphere.rotation.y += 0.03;
+            });
+            
+            particles.rotation.y += 0.0005;
+            particles.rotation.x += 0.0003;
+            
+            renderer.render(scene, camera);
+        }
+        
+        animate();
+    </script>
+    
+    <script>
+        // Mobile Menu Toggle
+        const menuBtn = document.querySelector('.menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuBtn.addEventListener('click', () => {
+            if (navLinks.style.display === 'flex') {
+                navLinks.style.display = 'none';
+            } else {
+                navLinks.style.display = 'flex';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '70px';
+                navLinks.style.right = '20px';
+                navLinks.style.background = 'white';
+                navLinks.style.padding = '20px';
+                navLinks.style.borderRadius = '10px';
+                navLinks.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
+            }
+        });
+    </script>
+    
+</body>
+</html>
