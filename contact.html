@@ -245,6 +245,18 @@
             .contact-page { padding: 100px 20px 40px; }
             .contact-item:hover { transform: translateX(5px); }
         }
+        .send-btn {
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
     </style>
 </head>
 <body>
@@ -307,27 +319,20 @@
                         <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
-                
-              <div class="contact-form">
+                 <div class="contact-form">
     <h3>Send a Message</h3>
-    <form id="contactForm" action="https://formsubmit.co/kr730936@gmail.com" method="POST">
-        <!-- FormSubmit Config - Important -->
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_subject" value="New Portfolio Message">
-        
+    <form id="contactForm">
         <div class="form-group">
             <input type="text" name="name" id="userName" placeholder="Your Name" required>
         </div>
         <div class="form-group">
-            <input type="email" name="email" id="userEmail" placeholder="Your Email" required>
-        </div>
-        <div class="form-group">
             <textarea name="message" id="userMessage" placeholder="Your Message" rows="4" required></textarea>
         </div>
-        <button type="submit" class="submit-btn" id="sendMailBtn">
-            </i> Send Message
+        <button type="submit" class="send-btn" id="sendMailBtn">
+            Send Message
         </button>
+    </form>
+</div>
     </form>
 </div>
             </div>
@@ -442,147 +447,42 @@
             renderer.render(scene, camera);
         }
         animate();
+
+
+        const contactForm = document.getElementById('contactForm');
+const whatsappNumber = '919812326320'; // सिर्फ आपका WhatsApp number
+
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('userName').value;
+        const message = document.getElementById('userMessage').value;
+        
+        let isValid = true;
+        
+        if (!name || name.trim() === '') {
+            alert('⚠️ Please enter your name');
+            isValid = false;
+        }
+        
+        if (!message || message.trim() === '') {
+            alert('⚠️ Please enter your message');
+            isValid = false;
+        }
+        
+        if (isValid) {
+            const whatsappMsg = `*New Message from ${name}*%0A%0A${message}`;
+            const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMsg}`;
+            window.open(whatsappLink, '_blank');
+            
+            document.getElementById('userName').value = '';
+            document.getElementById('userMessage').value = '';
+        }
+    });
+}
     </script>
     
-    <script>
-    // Mobile Menu Toggle
-    const menuBtn = document.querySelector('.menu-btn');
-    const navLinks = document.querySelector('.nav-links');
-    
-    menuBtn.addEventListener('click', () => {
-        if (navLinks.style.display === 'flex') {
-            navLinks.style.display = 'none';
-        } else {
-            navLinks.style.display = 'flex';
-            navLinks.style.flexDirection = 'column';
-            navLinks.style.position = 'absolute';
-            navLinks.style.top = '70px';
-            navLinks.style.right = '20px';
-            navLinks.style.background = 'white';
-            navLinks.style.padding = '20px';
-            navLinks.style.borderRadius = '10px';
-            navLinks.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
-        }
-    });
-    
-    // ==================== FORM SUBMIT - DIRECT EMAIL (NO GMAIL APP) ====================
-    const contactForm = document.getElementById('contactForm');
-    
-    function showError(inputId, message) {
-        const input = document.getElementById(inputId);
-        input.classList.add('input-error');
-        const existingError = input.parentElement.querySelector('.error-message');
-        if (existingError) existingError.remove();
-        const errorSpan = document.createElement('span');
-        errorSpan.className = 'error-message';
-        errorSpan.innerHTML = message;
-        errorSpan.style.cssText = 'color: #e74c3c; font-size: 12px; margin-top: 5px; display: block;';
-        input.parentElement.appendChild(errorSpan);
-    }
-    
-    function clearErrors() {
-        ['userName', 'userEmail', 'userMessage'].forEach(id => {
-            const input = document.getElementById(id);
-            if (input) {
-                input.classList.remove('input-error');
-                const error = input.parentElement.querySelector('.error-message');
-                if (error) error.remove();
-            }
-        });
-    }
-    
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('userName').value;
-            const email = document.getElementById('userEmail').value;
-            const message = document.getElementById('userMessage').value;
-            
-            clearErrors();
-            
-            let isValid = true;
-            
-            if (!name || name.trim() === '') {
-                showError('userName', '⚠️ Please enter your name');
-                isValid = false;
-            }
-            
-            if (!email || email.trim() === '') {
-                showError('userEmail', '⚠️ Please enter your email');
-                isValid = false;
-            } else if (!email.includes('@') || !email.includes('.')) {
-                showError('userEmail', '⚠️ Please enter a valid email address');
-                isValid = false;
-            }
-            
-            if (!message || message.trim() === '') {
-                showError('userMessage', '⚠️ Please enter your message');
-                isValid = false;
-            }
-            
-            if (isValid) {
-                // Show sending status
-                const submitBtn = document.querySelector('.submit-btn');
-                const originalText = submitBtn.innerHTML;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-                submitBtn.disabled = true;
-                
-                // Send form data to FormSubmit
-                fetch('https://formsubmit.co/ajax/kr730936@gmail.com', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        name: name,
-                        email: email,
-                        message: message,
-                        _subject: `Message from ${name}`
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    // Show success message
-                    const successMsg = document.createElement('div');
-                    successMsg.innerHTML = '✓ Message sent successfully! I will get back to you soon.';
-                    successMsg.style.cssText = 'color: #22c55e; font-size: 14px; margin-top: 15px; text-align: center; padding: 10px; background: rgba(34,197,94,0.1); border-radius: 8px;';
-                    document.querySelector('.contact-form').appendChild(successMsg);
-                    
-                    // Reset form
-                    document.getElementById('userName').value = '';
-                    document.getElementById('userEmail').value = '';
-                    document.getElementById('userMessage').value = '';
-                    
-                    setTimeout(() => successMsg.remove(), 4000);
-                })
-                .catch(error => {
-                    const errorMsg = document.createElement('div');
-                    errorMsg.innerHTML = '❌ Something went wrong. Please try again.';
-                    errorMsg.style.cssText = 'color: #e74c3c; font-size: 14px; margin-top: 15px; text-align: center; padding: 10px; background: rgba(231,76,60,0.1); border-radius: 8px;';
-                    document.querySelector('.contact-form').appendChild(errorMsg);
-                    setTimeout(() => errorMsg.remove(), 4000);
-                })
-                .finally(() => {
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.disabled = false;
-                });
-            }
-        });
-    }
-    
-    // Remove error on input
-    ['userName', 'userEmail', 'userMessage'].forEach(id => {
-        const input = document.getElementById(id);
-        if (input) {
-            input.addEventListener('input', function() {
-                this.classList.remove('input-error');
-                const error = this.parentElement.querySelector('.error-message');
-                if (error) error.remove();
-            });
-        }
-    });
-</script>
+   
 </body>
 </html>
