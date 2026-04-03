@@ -47,12 +47,12 @@
             display: block;
         }
         
-        .navbar {
+          .navbar {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            padding: 20px 60px;
+            padding: 15px 60px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -157,7 +157,8 @@
             color: black;
             line-height: 1.6;
             margin-bottom: 30px;
-                font-family: 'Montserrat', 'Inter', 'Poppins', sans-serif
+                font-family: 'Montserrat', 'Inter', 'Poppins', sans-serif;
+                font-weight: 600;
         }
         
         .hero-buttons {
@@ -221,6 +222,7 @@
         .stat-label {
             font-size: 20px;
             color: black;
+            font-weight: 700;
         }
         
         .hero-image {
@@ -518,9 +520,10 @@
         }
         
         .contact-info p {
-            color: #666;
+            color: #9c2967;
             margin-bottom: 20px;
             line-height: 1.6;
+            font-weight: 700;
         }
         
         .contact-details {
@@ -550,11 +553,13 @@
             margin: 0;
             color: #333;
             font-size: 14px;
+            font-weight: 900;
         }
         
         .contact-item a {
             color: #333;
             text-decoration: none;
+            font-weight: 900;
         }
         
         .contact-item a:hover {
@@ -604,7 +609,7 @@
             border: 1px solid rgba(102,126,234,0.2);
             border-radius: 10px;
             color: #333;
-            font-family: 'Poppins', sans-serif;
+            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
             font-size: 20px;
         }
         
@@ -622,6 +627,8 @@
     font-size: 32px;
     text-align: center;
     margin-bottom: 25px;
+       font-family:Verdana, Geneva, Tahoma, sans-serif
+
 }
 @media (max-width: 768px) {
     /* existing code... */
@@ -630,13 +637,17 @@
         font-size: 24px;
         text-align: center;
         white-space: nowrap;
+        
+       font-family:Verdana, Geneva, Tahoma, sans-serif
+
+        
     }
 }
         
         .send-btn {
             width: auto;
             padding: 12px 32px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #667eea, #3a2152);
             border: none;
             border-radius: 10px;
             color: #fff;
@@ -651,6 +662,9 @@
             margin-top: 20px;
             margin-right: auto;
             margin-left: 100px;
+            
+       font-family:Verdana, Geneva, Tahoma, sans-serif
+
         }
         
         .send-btn:hover {
@@ -811,6 +825,7 @@
             }
             .stat-label {
                 font-size: 14px;
+                font-weight: 700;
             }
             .stat-number {
                 font-size: 24px;
@@ -823,7 +838,8 @@
             .hero-text p {
                 font-size: 14px;
                 margin-bottom: 20px;
-                    font-family: 'Montserrat', 'Inter', 'Poppins', sans-serif
+                    font-family: 'Montserrat', 'Inter', 'Poppins', sans-serif;
+                    font-weight: 600;
             }
             .btn-primary, .btn-outline {
                 padding: 10px 24px;
@@ -855,6 +871,16 @@
                 font-size: 14px;
             }
         }
+        .input-error {
+    border-color: #e74c3c !important;
+}
+
+.error-message {
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+}
     </style>
 </head>
 <body>
@@ -1066,21 +1092,30 @@
             
             <div class="contact-form">
                 <h3>Send a Message</h3>
-                <div class="form-row">
-                    <div class="form-group">
-                        <input type="text" id="userName" placeholder="Your Name">
-                    </div>
-                    <div class="form-group">
-                        <input type="email" id="userEmail" placeholder="Your Email">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <textarea id="userMessage" placeholder="Your Message" rows="4"></textarea>
-                </div>
-                <button class="send-btn" id="sendMailBtn">
-                 Send Message
-                </button>
+             <div class="contact-form">
+    <h3>Send a Message</h3>
+    <form id="contactForm" action="https://formsubmit.co/kr730936@gmail.com" method="POST">
+        <!-- FormSubmit Config -->
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_subject" value="New Portfolio Message">
+        
+        <div class="form-row">
+            <div class="form-group">
+                <input type="text" name="name" id="userName" placeholder="Your Name">
             </div>
+            <div class="form-group">
+                <input type="email" name="email" id="userEmail" placeholder="Your Email">
+            </div>
+        </div>
+        <div class="form-group">
+            <textarea name="message" id="userMessage" placeholder="Your Message" rows="4"></textarea>
+        </div>
+        <button type="submit" class="send-btn" id="sendMailBtn">
+            Send Message
+        </button>
+    </form>
+</div>
         </div>
     </section>
     
@@ -1287,150 +1322,190 @@
         
         animate();
     </script>
+   <script>
+    // Mobile Menu Toggle
+    const menuBtn = document.querySelector('.menu-btn');
+    const navLinks = document.querySelector('.nav-links');
     
-    <script>
-        const menuBtn = document.querySelector('.menu-btn');
-        const navLinks = document.querySelector('.nav-links');
-        
-        menuBtn.addEventListener('click', () => {
-            if (navLinks.style.display === 'flex') {
-                navLinks.style.display = 'none';
-            } else {
-                navLinks.style.display = 'flex';
-                navLinks.style.flexDirection = 'column';
-                navLinks.style.position = 'absolute';
-                navLinks.style.top = '70px';
-                navLinks.style.right = '20px';
-                navLinks.style.background = 'white';
-                navLinks.style.padding = '20px';
-                navLinks.style.borderRadius = '10px';
-                navLinks.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
-            }
-        });
-        
-        const profileImg = document.getElementById('profileImg');
+    menuBtn.addEventListener('click', () => {
+        if (navLinks.style.display === 'flex') {
+            navLinks.style.display = 'none';
+        } else {
+            navLinks.style.display = 'flex';
+            navLinks.style.flexDirection = 'column';
+            navLinks.style.position = 'absolute';
+            navLinks.style.top = '70px';
+            navLinks.style.right = '20px';
+            navLinks.style.background = 'white';
+            navLinks.style.padding = '20px';
+            navLinks.style.borderRadius = '10px';
+            navLinks.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
+        }
+    });
+    
+    // Profile Image Error Handler
+    const profileImg = document.getElementById('profileImg');
+    if (profileImg) {
         profileImg.onerror = function() {
             this.src = 'https://ui-avatars.com/api/?name=Komal+Rajput&background=667eea&color=fff&size=400';
         };
-        
-        const sliderContainer = document.getElementById('sliderContainer');
-        const slideLeft = document.getElementById('slideLeft');
-        const slideRight = document.getElementById('slideRight');
-        
-        if (slideLeft && slideRight && sliderContainer) {
-            slideLeft.addEventListener('click', () => {
-                sliderContainer.scrollBy({ left: -380, behavior: 'smooth' });
-            });
-            slideRight.addEventListener('click', () => {
-                sliderContainer.scrollBy({ left: 380, behavior: 'smooth' });
-            });
-        }
-        
-        const servicesSliderContainer = document.getElementById('servicesSliderContainer');
-        const servicesSlideLeft = document.getElementById('servicesSlideLeft');
-        const servicesSlideRight = document.getElementById('servicesSlideRight');
-        
-        if (servicesSlideLeft && servicesSlideRight && servicesSliderContainer) {
-            servicesSlideLeft.addEventListener('click', () => {
-                servicesSliderContainer.scrollBy({ left: -380, behavior: 'smooth' });
-            });
-            servicesSlideRight.addEventListener('click', () => {
-                servicesSliderContainer.scrollBy({ left: 380, behavior: 'smooth' });
-            });
-        }
-  const sendMailBtn = document.getElementById('sendMailBtn');
-
-if (sendMailBtn) {
-    sendMailBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        const name = document.getElementById('userName').value;
-        const email = document.getElementById('userEmail').value;
-        const message = document.getElementById('userMessage').value;
-        
-        // Clear previous errors
-        clearErrors();
-        
-        let isValid = true;
-        
-        if (!name || name.trim() === '') {
-            showError('userName', '⚠️ Please enter your name');
-            isValid = false;
-        }
-        
-        if (!email || email.trim() === '') {
-            showError('userEmail', '⚠️ Please enter your email');
-            isValid = false;
-        } else if (!email.includes('@') || !email.includes('.')) {
-            showError('userEmail', '⚠️ Please enter a valid email address');
-            isValid = false;
-        }
-        
-        if (!message || message.trim() === '') {
-            showError('userMessage', '⚠️ Please enter your message');
-            isValid = false;
-        }
-        
-        if (isValid) {
-            const toEmail = 'kr730936@gmail.com';
-            const subject = `Message from ${name}`;
-            const body = `Name: ${name}%0A%0AEmail: ${email}%0A%0AMessage:%0A${message}`;
-            
-            // This opens phone's default email app (Gmail)
-            window.location.href = `mailto:${toEmail}?subject=${encodeURIComponent(subject)}&body=${body}`;
-            
-            // Show success message
-            const successMsg = document.createElement('div');
-            successMsg.innerHTML = '✓ Gmail app opened! Please send the message.';
-            successMsg.style.cssText = 'color: #22c55e; font-size: 14px; margin-top: 15px; text-align: center; padding: 10px; background: rgba(34,197,94,0.1); border-radius: 8px;';
-            document.querySelector('.contact-form').appendChild(successMsg);
-            setTimeout(() => successMsg.remove(), 3000);
-            
-            // Reset form
-            setTimeout(() => {
-                document.getElementById('userName').value = '';
-                document.getElementById('userEmail').value = '';
-                document.getElementById('userMessage').value = '';
-            }, 2000);
-        }
-    });
-}
-
-function showError(inputId, message) {
-    const input = document.getElementById(inputId);
-    input.classList.add('input-error');
-    const existingError = input.parentNode.querySelector('.error-message');
-    if (existingError) existingError.remove();
-    const errorSpan = document.createElement('span');
-    errorSpan.className = 'error-message';
-    errorSpan.innerHTML = message;
-    errorSpan.style.cssText = 'color: #e74c3c; font-size: 12px; margin-top: 5px; display: block;';
-    input.parentNode.appendChild(errorSpan);
-}
-
-function clearErrors() {
-    ['userName', 'userEmail', 'userMessage'].forEach(id => {
-        const input = document.getElementById(id);
-        if (input) {
-            input.classList.remove('input-error');
-            const error = input.parentNode.querySelector('.error-message');
-            if (error) error.remove();
-        }
-    });
-}
-
-// Remove error on input
-['userName', 'userEmail', 'userMessage'].forEach(id => {
-    const input = document.getElementById(id);
-    if (input) {
-        input.addEventListener('input', function() {
-            this.classList.remove('input-error');
-            const error = this.parentNode.querySelector('.error-message');
-            if (error) error.remove();
+    }
+    
+    // Projects Slider
+    const sliderContainer = document.getElementById('sliderContainer');
+    const slideLeft = document.getElementById('slideLeft');
+    const slideRight = document.getElementById('slideRight');
+    
+    if (slideLeft && slideRight && sliderContainer) {
+        slideLeft.addEventListener('click', () => {
+            sliderContainer.scrollBy({ left: -380, behavior: 'smooth' });
+        });
+        slideRight.addEventListener('click', () => {
+            sliderContainer.scrollBy({ left: 380, behavior: 'smooth' });
         });
     }
-});
-    </script>
+    
+    // Services Slider
+    const servicesSliderContainer = document.getElementById('servicesSliderContainer');
+    const servicesSlideLeft = document.getElementById('servicesSlideLeft');
+    const servicesSlideRight = document.getElementById('servicesSlideRight');
+    
+    if (servicesSlideLeft && servicesSlideRight && servicesSliderContainer) {
+        servicesSlideLeft.addEventListener('click', () => {
+            servicesSliderContainer.scrollBy({ left: -380, behavior: 'smooth' });
+        });
+        servicesSlideRight.addEventListener('click', () => {
+            servicesSliderContainer.scrollBy({ left: 380, behavior: 'smooth' });
+        });
+    }
+    
+    // ==================== FORM VALIDATION & SUBMISSION ====================
+    const contactForm = document.getElementById('contactForm');
+    
+    function showError(inputId, message) {
+        const input = document.getElementById(inputId);
+        if (!input) return;
+        input.classList.add('input-error');
+        
+        const existingError = input.parentNode.querySelector('.error-message');
+        if (existingError) existingError.remove();
+        
+        const errorSpan = document.createElement('span');
+        errorSpan.className = 'error-message';
+        errorSpan.innerHTML = message;
+        errorSpan.style.cssText = 'color: #e74c3c; font-size: 12px; margin-top: 5px; display: block;';
+        input.parentNode.appendChild(errorSpan);
+    }
+    
+    function clearErrors() {
+        const ids = ['userName', 'userEmail', 'userMessage'];
+        ids.forEach(id => {
+            const input = document.getElementById(id);
+            if (input) {
+                input.classList.remove('input-error');
+                const error = input.parentNode.querySelector('.error-message');
+                if (error) error.remove();
+            }
+        });
+    }
+    
+    function showSuccessMessage(message) {
+        const existingMsg = document.querySelector('.success-message');
+        if (existingMsg) existingMsg.remove();
+        
+        const successMsg = document.createElement('div');
+        successMsg.className = 'success-message';
+        successMsg.innerHTML = message;
+        successMsg.style.cssText = 'color: #22c55e; font-size: 14px; margin-top: 15px; text-align: center; padding: 10px; background: rgba(34,197,94,0.1); border-radius: 8px;';
+        document.querySelector('.contact-form').appendChild(successMsg);
+        
+        setTimeout(() => successMsg.remove(), 4000);
+    }
+    
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('userName').value;
+            const email = document.getElementById('userEmail').value;
+            const message = document.getElementById('userMessage').value;
+            
+            clearErrors();
+            
+            let isValid = true;
+            
+            if (!name || name.trim() === '') {
+                showError('userName', '⚠️ Please fill this field');
+                isValid = false;
+            }
+            
+            if (!email || email.trim() === '') {
+                showError('userEmail', '⚠️ Please fill this field');
+                isValid = false;
+            } else if (!email.includes('@') || !email.includes('.')) {
+                showError('userEmail', '⚠️ Please enter a valid email address');
+                isValid = false;
+            }
+            
+            if (!message || message.trim() === '') {
+                showError('userMessage', '⚠️ Please fill this field');
+                isValid = false;
+            }
+            
+            if (isValid) {
+                // Show sending status
+                const submitBtn = document.querySelector('.send-btn');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                submitBtn.disabled = true;
+                
+                // Send data to FormSubmit
+                const formData = new FormData();
+                formData.append('name', name);
+                formData.append('email', email);
+                formData.append('message', message);
+                formData.append('_subject', `Portfolio Message from ${name}`);
+                
+                fetch('https://formsubmit.co/ajax/kr730936@gmail.com', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    showSuccessMessage('✓ Your message sent successfully! I will get back to you soon.');
+                    
+                    // Reset form
+                    document.getElementById('userName').value = '';
+                    document.getElementById('userEmail').value = '';
+                    document.getElementById('userMessage').value = '';
+                })
+                .catch(error => {
+                    showSuccessMessage('❌ Something went wrong. Please try again.');
+                })
+                .finally(() => {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                });
+            }
+        });
+    }
+    
+    // Remove error on input
+    const inputIds = ['userName', 'userEmail', 'userMessage'];
+    inputIds.forEach(id => {
+        const input = document.getElementById(id);
+        if (input) {
+            input.addEventListener('input', function() {
+                this.classList.remove('input-error');
+                const error = this.parentNode.querySelector('.error-message');
+                if (error) error.remove();
+            });
+        }
+    });
+</script>
+
+</script>
+
     
 </body>
 </html>
