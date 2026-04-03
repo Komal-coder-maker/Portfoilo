@@ -1323,39 +1323,99 @@
             renderer.render(scene, camera);
         }
         
-        animate();
-        const contactForm = document.getElementById('contactForm');
-const whatsappNumber = '919812326320'; // सिर्फ आपका WhatsApp number
 
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const name = document.getElementById('userName').value;
-        const message = document.getElementById('userMessage').value;
-        
-        let isValid = true;
-        
-        if (!name || name.trim() === '') {
-            alert('⚠️ Please enter your name');
-            isValid = false;
-        }
-        
-        if (!message || message.trim() === '') {
-            alert('⚠️ Please enter your message');
-            isValid = false;
-        }
-        
-        if (isValid) {
-            const whatsappMsg = `*New Message from ${name}*%0A%0A${message}`;
-            const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMsg}`;
-            window.open(whatsappLink, '_blank');
+    // ==================== MOBILE MENU TOGGLE ====================
+    const menuBtn = document.querySelector('.menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    
+    if (menuBtn) {
+        menuBtn.addEventListener('click', () => {
+            if (navLinks.style.display === 'flex') {
+                navLinks.style.display = 'none';
+            } else {
+                navLinks.style.display = 'flex';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '70px';
+                navLinks.style.right = '20px';
+                navLinks.style.background = 'white';
+                navLinks.style.padding = '20px';
+                navLinks.style.borderRadius = '10px';
+                navLinks.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
+                navLinks.style.zIndex = '999';
+            }
+        });
+    }
+    
+    // ==================== PROFILE IMAGE ERROR HANDLER ====================
+    const profileImg = document.getElementById('profileImg');
+    if (profileImg) {
+        profileImg.onerror = function() {
+            this.src = 'https://ui-avatars.com/api/?name=Komal+Rajput&background=667eea&color=fff&size=400';
+        };
+    }
+    
+    // ==================== PROJECTS SLIDER ====================
+    const sliderContainer = document.getElementById('sliderContainer');
+    const slideLeft = document.getElementById('slideLeft');
+    const slideRight = document.getElementById('slideRight');
+    
+    if (slideLeft && slideRight && sliderContainer) {
+        slideLeft.addEventListener('click', () => {
+            sliderContainer.scrollBy({ left: -380, behavior: 'smooth' });
+        });
+        slideRight.addEventListener('click', () => {
+            sliderContainer.scrollBy({ left: 380, behavior: 'smooth' });
+        });
+    }
+    
+    // ==================== SERVICES SLIDER ====================
+    const servicesSliderContainer = document.getElementById('servicesSliderContainer');
+    const servicesSlideLeft = document.getElementById('servicesSlideLeft');
+    const servicesSlideRight = document.getElementById('servicesSlideRight');
+    
+    if (servicesSlideLeft && servicesSlideRight && servicesSliderContainer) {
+        servicesSlideLeft.addEventListener('click', () => {
+            servicesSliderContainer.scrollBy({ left: -380, behavior: 'smooth' });
+        });
+        servicesSlideRight.addEventListener('click', () => {
+            servicesSliderContainer.scrollBy({ left: 380, behavior: 'smooth' });
+        });
+    }
+    
+    // ==================== WHATSAPP FORM SUBMISSION ====================
+    const contactForm = document.getElementById('contactForm');
+    const whatsappNumber = '919812326320'; // सिर्फ आपका WhatsApp number
+    
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            document.getElementById('userName').value = '';
-            document.getElementById('userMessage').value = '';
-        }
-    });
-}
+            const name = document.getElementById('userName').value;
+            const message = document.getElementById('userMessage').value;
+            
+            let isValid = true;
+            
+            if (!name || name.trim() === '') {
+                alert('⚠️ Please enter your name');
+                isValid = false;
+            }
+            
+            if (!message || message.trim() === '') {
+                alert('⚠️ Please enter your message');
+                isValid = false;
+            }
+            
+            if (isValid) {
+                const whatsappMsg = `*New Message from ${name}*%0A%0A${message}`;
+                const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMsg}`;
+                window.open(whatsappLink, '_blank');
+                
+                document.getElementById('userName').value = '';
+                document.getElementById('userMessage').value = '';
+            }
+        });
+    }
 
     </script>
    
