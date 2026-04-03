@@ -13,6 +13,7 @@
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         * {
@@ -37,6 +38,7 @@
             height: 100%;
             z-index: 0;
             overflow: hidden;
+            opacity: 0;  /* ← CHANGE 1: Animation removed */
         }
         
         canvas {
@@ -137,23 +139,25 @@
             text-transform: uppercase;
         }
         
-        .hero-text h1 {
-            font-size: 56px;
-            font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 20px;
-            color: black;
-        }
-        
+       .hero-text h1 {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    color: black;
+    font-family: 'Space Grotesk', 'Poppins', sans-serif;
+    letter-spacing: -1.5px;
+}
         .hero-text .highlight {
             color: #667eea;
         }
         
         .hero-text p {
-            font-size: 18px;
+            font-size: 22px;
             color: black;
             line-height: 1.6;
             margin-bottom: 30px;
+                font-family: 'Montserrat', 'Inter', 'Poppins', sans-serif
         }
         
         .hero-buttons {
@@ -668,6 +672,7 @@
         .footer p {
             margin: 0;
             margin-bottom: 15px;
+            
         }
         
         .footer .social-links {
@@ -812,11 +817,13 @@
             }
             .hero-text h3 {
                 font-size: 18px;
-                margin-bottom: 15px;
+                margin-top: 30px;
+                   font-family: 'Inter', 'Poppins', sans-serif;
             }
             .hero-text p {
-                font-size: 15px;
+                font-size: 14px;
                 margin-bottom: 20px;
+                    font-family: 'Montserrat', 'Inter', 'Poppins', sans-serif
             }
             .btn-primary, .btn-outline {
                 padding: 10px 24px;
@@ -872,7 +879,8 @@
     <section class="hero">
         <div class="hero-content">
             <div class="hero-text">
-                <h3 class="typing-text" id="typingText"></h3>
+                <!-- CHANGE 2: Typing animation removed - static text -->
+                <h3>WELCOME TO MY PORTFOLIO</h3>
                 <h1>Hi, I'm <span class="highlight">Komal</span></h1>
                 <p>Software Engineer | Web Developer & App Developer</p>
                 <p>I build modern, responsive, and interactive web applications that provide great user experiences.</p>
@@ -1305,26 +1313,6 @@
             this.src = 'https://ui-avatars.com/api/?name=Komal+Rajput&background=667eea&color=fff&size=400';
         };
         
-        const welcomeText = "WELCOME TO MY PORTFOLIO";
-        let welcomeIndex = 0;
-        const welcomeElement = document.getElementById('typingText');
-        
-        function typeWelcome() {
-            if (welcomeIndex < welcomeText.length) {
-                welcomeElement.innerHTML += welcomeText.charAt(welcomeIndex);
-                welcomeIndex++;
-                setTimeout(typeWelcome, 100);
-            } else {
-                welcomeElement.classList.remove('typing-text');
-                welcomeElement.style.borderRight = 'none';
-            }
-        }
-        
-        if (welcomeElement) {
-            welcomeElement.innerHTML = "";
-            typeWelcome();
-        }
-        
         const sliderContainer = document.getElementById('sliderContainer');
         const slideLeft = document.getElementById('slideLeft');
         const slideRight = document.getElementById('slideRight');
@@ -1350,51 +1338,98 @@
                 servicesSliderContainer.scrollBy({ left: 380, behavior: 'smooth' });
             });
         }
+  const sendMailBtn = document.getElementById('sendMailBtn');
+
+if (sendMailBtn) {
+    sendMailBtn.addEventListener('click', function(e) {
+        e.preventDefault();
         
-        const sendMailBtn = document.getElementById('sendMailBtn');
+        const name = document.getElementById('userName').value;
+        const email = document.getElementById('userEmail').value;
+        const message = document.getElementById('userMessage').value;
         
-        if (sendMailBtn) {
-            sendMailBtn.addEventListener('click', function() {
-                const name = document.getElementById('userName').value;
-                const email = document.getElementById('userEmail').value;
-                const message = document.getElementById('userMessage').value;
-                
-                if (!name || name.trim() === '') {
-                    alert('⚠️ Please enter your name');
-                    document.getElementById('userName').focus();
-                    return;
-                }
-                if (!email || email.trim() === '') {
-                    alert('⚠️ Please enter your email');
-                    document.getElementById('userEmail').focus();
-                    return;
-                }
-                if (!email.includes('@') || !email.includes('.')) {
-                    alert('⚠️ Please enter a valid email address');
-                    document.getElementById('userEmail').focus();
-                    return;
-                }
-                if (!message || message.trim() === '') {
-                    alert('⚠️ Please enter your message');
-                    document.getElementById('userMessage').focus();
-                    return;
-                }
-                
-                const yourEmail = 'kr730936@gmail.com';
-                const emailSubject = `Message from ${name}`;
-                const emailBody = `Name: ${name}%0A%0AEmail: ${email}%0A%0AMessage:%0A${message}`;
-                const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${yourEmail}&su=${encodeURIComponent(emailSubject)}&body=${emailBody}`;
-                
-                window.open(gmailLink, '_blank');
-                
-                
-                setTimeout(() => {
-                    document.getElementById('userName').value = '';
-                    document.getElementById('userEmail').value = '';
-                    document.getElementById('userMessage').value = '';
-                }, 2000);
-            });
+        // Clear previous errors
+        clearErrors();
+        
+        let isValid = true;
+        
+        if (!name || name.trim() === '') {
+            showError('userName', '⚠️ Please enter your name');
+            isValid = false;
         }
+        
+        if (!email || email.trim() === '') {
+            showError('userEmail', '⚠️ Please enter your email');
+            isValid = false;
+        } else if (!email.includes('@') || !email.includes('.')) {
+            showError('userEmail', '⚠️ Please enter a valid email address');
+            isValid = false;
+        }
+        
+        if (!message || message.trim() === '') {
+            showError('userMessage', '⚠️ Please enter your message');
+            isValid = false;
+        }
+        
+        if (isValid) {
+            const toEmail = 'kr730936@gmail.com';
+            const subject = `Message from ${name}`;
+            const body = `Name: ${name}%0A%0AEmail: ${email}%0A%0AMessage:%0A${message}`;
+            
+            // This opens phone's default email app (Gmail)
+            window.location.href = `mailto:${toEmail}?subject=${encodeURIComponent(subject)}&body=${body}`;
+            
+            // Show success message
+            const successMsg = document.createElement('div');
+            successMsg.innerHTML = '✓ Gmail app opened! Please send the message.';
+            successMsg.style.cssText = 'color: #22c55e; font-size: 14px; margin-top: 15px; text-align: center; padding: 10px; background: rgba(34,197,94,0.1); border-radius: 8px;';
+            document.querySelector('.contact-form').appendChild(successMsg);
+            setTimeout(() => successMsg.remove(), 3000);
+            
+            // Reset form
+            setTimeout(() => {
+                document.getElementById('userName').value = '';
+                document.getElementById('userEmail').value = '';
+                document.getElementById('userMessage').value = '';
+            }, 2000);
+        }
+    });
+}
+
+function showError(inputId, message) {
+    const input = document.getElementById(inputId);
+    input.classList.add('input-error');
+    const existingError = input.parentNode.querySelector('.error-message');
+    if (existingError) existingError.remove();
+    const errorSpan = document.createElement('span');
+    errorSpan.className = 'error-message';
+    errorSpan.innerHTML = message;
+    errorSpan.style.cssText = 'color: #e74c3c; font-size: 12px; margin-top: 5px; display: block;';
+    input.parentNode.appendChild(errorSpan);
+}
+
+function clearErrors() {
+    ['userName', 'userEmail', 'userMessage'].forEach(id => {
+        const input = document.getElementById(id);
+        if (input) {
+            input.classList.remove('input-error');
+            const error = input.parentNode.querySelector('.error-message');
+            if (error) error.remove();
+        }
+    });
+}
+
+// Remove error on input
+['userName', 'userEmail', 'userMessage'].forEach(id => {
+    const input = document.getElementById(id);
+    if (input) {
+        input.addEventListener('input', function() {
+            this.classList.remove('input-error');
+            const error = this.parentNode.querySelector('.error-message');
+            if (error) error.remove();
+        });
+    }
+});
     </script>
     
 </body>
